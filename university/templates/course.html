@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load range %}
+<link rel="stylesheet" type="text/css" href="../static/css/style.css">
+{% block content %}
+
+  <div class="mt-5 pt-3">
+    <section id="courseDetails" class="pb-5">
+
+      <!-- News card -->
+      <div class="card mt-5 hoverable">
+
+        <div class="row mt-1 pd-1">
+
+          <div class="col-lg-6">
+
+              <div class="p-5 text-center">
+                    <img src="../static/images/course.jpg" style="height: 450px;overflow: hidden;"  alt="First slide" class="img-fluid">
+              </div>
+           
+          </div>
+
+          <div class="col-lg-6 pr-5" style="padding: 75px 0;">
+
+            <h2 class="h2-responsive course-name font-weight-bold dark-grey-text mb-2 ml-xl-0 ml-4">
+                <strong>{{course.name}} </strong>
+            </h2>
+            
+
+            
+            <span style="font-size: 17px;">
+              <p class="ml-xl-0 ml-4">{{course.description}} </p>
+            </span>
+        </div>
+   
+      </div>
+      <!-- News card -->
+
+    </section>
+
+
+    <!-- Section: courses v.5 -->
+    
+    <!-- Section: courses v.5 -->
+
+  </div>
+{% endblock content %}
