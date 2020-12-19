@@ -11,7 +11,6 @@ from django.views.decorators.csrf import csrf_exempt
 def login(request):
     context = {}
     context.update(csrf(request))
-    print("login................")
     return render(request, 'login.html', context)
 
 def verification(request):
@@ -26,9 +25,6 @@ def verification(request):
                 request.session['email'] = i.email
                 request.session['cid'] = i.id 
                 request.session['sp'] = selectsp
-                print("verification.................")
-                print (request.session.get('name'))
-                print (request.session.get('cid'))
                 return HttpResponseRedirect('/studenthome')
         else:
             return render(request, 'login.html', {'error': 'Email Or Password is incorrect.'})
@@ -39,9 +35,6 @@ def verification(request):
                 request.session['email'] = i.email
                 request.session['cid'] = i.id 
                 request.session['sp'] = selectsp
-                print("verification.................")
-                print (request.session.get('name'))
-                print (request.session.get('cid'))
                 return HttpResponseRedirect('/professorhome')
         else:
             return render(request, 'login.html', {'error': 'Email Or Password is incorrect.'})   
@@ -49,7 +42,6 @@ def verification(request):
 def signup(request):
     context = {}
     context.update(csrf(request))
-    print("signup...............")
     return render(request, 'signup.html', context)
 
 def registrationdata(request):
@@ -60,7 +52,6 @@ def registrationdata(request):
     email = request.POST.get('email')
     pass1 = request.POST.get('password')
     pass2 = request.POST.get('confirmpassword')
-    print("registrationdata..................")
     if selectsp == "Student":
         for i in Student.objects.all():
             if email == i.email:
@@ -93,7 +84,6 @@ def home(request):
 def logout(request):
     del request.session['name']
     del request.session['cid']
-    print("logout................")
     return HttpResponseRedirect('/home/')
 
 def studenthome(request):
@@ -106,12 +96,8 @@ def studenthome(request):
         xstudent=Student.objects.get(id=cid)
 
         for coursea in StudentCourse.objects.all():
-            print(coursea.student.id)
             if coursea.student.id == xstudent.id :
                 context.setdefault("courses",[]).append([coursea.course.id,coursea.course.name,coursea.course.description])
-        print("home.......................")
-        print("student.,,:::",cid,name,xstudent)
-        print (context)
     return render(request, 'studenthome.html', context)
 
 
@@ -124,14 +110,8 @@ def professorhome(request):
         xprofessor=Professor.objects.get(id=cid)
 
         for coursea in ProfessorCourse.objects.all():
-            print(coursea)
             if coursea.professor.id == xprofessor.id :
                 context.setdefault("courses",[]).append([coursea.course.id,coursea.course.name,coursea.course.description, coursea.professor.firstname])
-        else:
-            print("else.......")
-        print("home.......................")
-        print("professor..:::",cid,xprofessor)
-        print (context)
     return render(request, 'professorhome.html', context)
 
 def course(request,id):
@@ -155,7 +135,6 @@ def addcourse(request):
     return render(request, 'addcourse.html', context)
 
 def addcoursefunc(request):
-    print("addcoursefunc..................")
     context={}
     context['sp'] = request.session.get('sp')
     if request.session.get('name'):
@@ -177,7 +156,6 @@ def addcprofessor(request,id):
         cid = request.session.get('cid')
         
         for coursea in ProfessorCourse.objects.all():
-                print(coursea)
                 if coursea.course.id == id and coursea.professor.id == cid :
                     return HttpResponseRedirect('/professorhome/')
         course = Course.objects.get(id=id)
@@ -193,7 +171,6 @@ def addcstudent(request,id):
         cid = request.session.get('cid')
         
         for coursea in StudentCourse.objects.all():
-                print(coursea)
                 if coursea.course.id == id and coursea.student.id == cid :
                     return HttpResponseRedirect('/studenthome/')
         course = Course.objects.get(id=id)
